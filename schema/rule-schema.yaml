@@ -1,0 +1,120 @@
+# Claude Code Rule Schema
+# Version: 1.0.0
+#
+# This schema defines the frontmatter structure for rules in this collection.
+# Rules use YAML frontmatter to declare metadata for cataloging and validation.
+
+schema:
+  version: "1.0.0"
+
+# Required frontmatter fields
+required:
+  - id          # Unique identifier (kebab-case)
+  - version     # Semver version string
+  - domain      # Primary functional domain
+  - name        # Human-readable name
+  - description # Brief description (< 160 chars)
+
+# Optional frontmatter fields
+optional:
+  - author      # Author identifier
+  - tags        # Array of searchable tags
+  - paths       # Glob patterns for conditional loading (claude-code native)
+  - relationship:
+      complements: []  # Rules that work alongside this one
+      replaces: []     # Rules this is an alternative to
+      extends: null    # Rule this builds upon
+  - requires:
+      tools: []        # External CLI tools needed
+      rules: []        # Other rules that must be present
+  - activation:
+      triggers: []     # Conditions that suggest using this rule
+      contexts: []     # Work contexts where this rule applies
+
+# Domain taxonomy - rules must declare exactly one
+domains:
+  task-management:
+    description: "Work tracking, prioritization, and issue management"
+    examples: ["todos", "issues", "sprints", "kanban"]
+
+  requirements:
+    description: "Specification, traceability, and requirements tracking"
+    examples: ["PRDs", "design docs", "functional requirements"]
+
+  code-quality:
+    description: "Code style, patterns, and architectural standards"
+    examples: ["linting", "naming conventions", "design patterns"]
+
+  version-control:
+    description: "Git workflows and repository management"
+    examples: ["branching", "commits", "pull requests"]
+
+  testing:
+    description: "Test strategy, coverage, and quality assurance"
+    examples: ["TDD", "integration tests", "e2e"]
+
+  documentation:
+    description: "Documentation standards and generation"
+    examples: ["READMEs", "API docs", "inline comments"]
+
+  security:
+    description: "Security practices and vulnerability prevention"
+    examples: ["auth", "secrets management", "OWASP"]
+
+  deployment:
+    description: "CI/CD, builds, and release management"
+    examples: ["pipelines", "environments", "versioning"]
+
+# Validation rules for the collection
+validation:
+  structural:
+    - id_format: "^[a-z][a-z0-9-]*$"  # kebab-case
+    - version_format: "^\\d+\\.\\d+\\.\\d+$"  # semver
+    - domain_exists: true  # Must be from taxonomy
+    - description_max_length: 160
+
+  semantic:
+    # Two rules cannot both replace each other
+    - no_circular_replacement
+
+    # A rule cannot complement and replace the same rule
+    - no_complement_replace_conflict
+
+    # Rules in same domain without relationship declaration = warning
+    - same_domain_requires_relationship
+
+    # Extended rule must exist in collection
+    - extends_must_exist
+
+  composition:
+    # When installing multiple rules, validate:
+    - all_complements_available    # Warn if complement missing
+    - no_replacement_conflicts     # Error if rule + replacement both selected
+    - dependencies_satisfied       # Error if required tool/rule missing
+
+# Example frontmatter block
+example: |
+  ---
+  id: beads-workflow
+  version: 1.0.0
+  name: Beads Task Management
+  description: Multi-session task tracking with dependency graphs using the beads issue tracker
+  domain: task-management
+  author: dixson3
+  tags: [workflow, planning, issue-tracking, dependencies]
+  relationship:
+    complements:
+      - design-spec
+      - prd-workflow
+    replaces:
+      - simple-todos
+  requires:
+    tools:
+      - bd
+  activation:
+    triggers:
+      - ".beads/ directory exists"
+    contexts:
+      - multi-session-work
+      - complex-dependencies
+  ---

@@ -1,3 +1,24 @@
+---
+id: design-spec
+version: 1.0.0
+name: Design Specification Workflow
+description: Requirements tracking and validation using DESIGN.md as the source of truth
+domain: requirements
+author: dixson3
+tags: [requirements, specifications, traceability, validation]
+relationship:
+  complements:
+    - beads-workflow
+    - prd-workflow
+activation:
+  triggers:
+    - "DESIGN.md exists in project root"
+    - "user mentions requirements, specifications, or constraints"
+  contexts:
+    - implementation-planning
+    - design-validation
+---
+
 # Design Spec Workflow
 
 This project tracks and requirements in `DESIGN.md`. Use `DESIGN.md` for requirement analysis, validation, traceability, and documentation updates.

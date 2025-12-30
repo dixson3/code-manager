@@ -1,0 +1,81 @@
+# Claude Code Rules Catalog
+# Index of available rules bundled with the rules-management plugin
+#
+# Use /rules-management:rules to interactively manage rules in your project
+
+catalog:
+  version: "1.0.0"
+  generated: "2025-01-01"
+
+# Domain index
+domains:
+  task-management:
+    description: "Work tracking, prioritization, and issue management"
+    rules:
+      - beads-workflow
+
+  requirements:
+    description: "Specification, traceability, and requirements tracking"
+    rules:
+      - design-spec
+      - prd-workflow
+
+# Full rule index
+rules:
+  beads-workflow:
+    name: "Beads Task Management"
+    description: "Multi-session task tracking with dependency graphs using the beads issue tracker"
+    domain: task-management
+    file: "Beads.md"
+    path: "collection/task-management/Beads.md"
+    version: "1.0.0"
+    author: dixson3
+    tags: [workflow, planning, issue-tracking, dependencies]
+    requires:
+      tools: [bd]
+    relationship:
+      complements: [design-spec, prd-workflow]
+      replaces: [simple-todos]
+
+  design-spec:
+    name: "Design Specification Workflow"
+    description: "Requirements tracking and validation using DESIGN.md as the source of truth"
+    domain: requirements
+    file: "Design-spec.md"
+    path: "collection/requirements/Design-spec.md"
+    version: "1.0.0"
+    author: dixson3
+    tags: [requirements, specifications, traceability, validation]
+    relationship:
+      complements: [beads-workflow, prd-workflow]
+      replaces: []
+
+  prd-workflow:
+    name: "PRD-Driven Development"
+    description: "Spec-driven development using docs/PRD.md as the canonical source of truth"
+    domain: requirements
+    file: "PRD.md"
+    path: "collection/requirements/PRD.md"
+    version: "1.0.0"
+    author: dixson3
+    tags: [requirements, prd, traceability, spec-driven]
+    relationship:
+      complements: [beads-workflow]
+      replaces: [design-spec]
+
+# Compatibility matrix
+# Shows which rules work well together and which are alternatives
+compatibility:
+  recommended_sets:
+    - name: "Full Workflow (Beads + Design)"
+      rules: [beads-workflow, design-spec]
+      description: "Task management with design specification tracking"
+
+    - name: "Full Workflow (Beads + PRD)"
+      rules: [beads-workflow, prd-workflow]
+      description: "Task management with PRD-driven development"
+
+  conflicts:
+    - rules: [design-spec, prd-workflow]
+      reason: "Both address requirements tracking with different approaches"
+      resolution: "Choose one based on preference: DESIGN.md (design-spec) or docs/PRD.md (prd-workflow)"

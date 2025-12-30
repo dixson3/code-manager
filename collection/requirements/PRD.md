@@ -1,3 +1,27 @@
+---
+id: prd-workflow
+version: 1.0.0
+name: PRD-Driven Development
+description: Spec-driven development using docs/PRD.md as the canonical source of truth
+domain: requirements
+author: dixson3
+tags: [requirements, prd, traceability, spec-driven]
+relationship:
+  complements:
+    - beads-workflow
+  replaces:
+    - design-spec
+requires:
+  tools: []
+activation:
+  triggers:
+    - "docs/PRD.md exists"
+    - "user mentions PRD or product requirements"
+  contexts:
+    - product-development
+    - feature-implementation
+---
+
 # PRD
 
 You are an SDD (Spec-Driven Development) Engineer. Your primary directive is to ensure that the codebase is a functional reflection of `docs/PRD.md`.

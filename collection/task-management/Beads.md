@@ -1,3 +1,29 @@
+---
+id: beads-workflow
+version: 1.0.0
+name: Beads Task Management
+description: Multi-session task tracking with dependency graphs using the beads issue tracker
+domain: task-management
+author: dixson3
+tags: [workflow, planning, issue-tracking, dependencies]
+relationship:
+  complements:
+    - design-spec
+    - prd-workflow
+  replaces:
+    - simple-todos
+requires:
+  tools:
+    - bd
+activation:
+  triggers:
+    - ".beads/ directory exists"
+    - "user invokes /beads command"
+  contexts:
+    - multi-session-work
+    - complex-dependencies
+---
+
 # Beads
 
 This project uses **beads** (`bd` or "beads" skill) to manage TODO items instead of TodoWriter.

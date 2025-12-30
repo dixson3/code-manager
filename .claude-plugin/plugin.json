@@ -1,0 +1,14 @@
+{
+  "name": "rules-management",
+  "version": "1.0.0",
+  "description": "Manage Claude Code rules for your projects - browse, install, and validate rule collections",
+  "author": {
+    "name": "James Dixson",
+    "email": "dixson3@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["rules", "workflow", "requirements", "task-management"],
+  "commands": [
+    "./commands/rules.md"
+  ]
+}
