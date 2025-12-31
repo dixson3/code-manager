@@ -91,20 +91,20 @@ Each rule has YAML frontmatter with these fields:
 
 ## Example Interactions
 
-User: `/rules-manager:rules`
+User: `/code-manager:rules`
 → Enter interactive mode, ask what they want to do
 
-User: `/rules-manager:rules list`
+User: `/code-manager:rules list`
 → Show all available rules with install status
 
-User: `/rules-manager:rules add beads-workflow`
+User: `/code-manager:rules add beads-workflow`
 → Install the beads-workflow rule to .claude/rules/
 
-User: `/rules-manager:rules remove edd`
+User: `/code-manager:rules remove edd`
 → Remove edd from .claude/rules/
 
-User: `/rules-manager:rules validate`
+User: `/code-manager:rules validate`
 → Check installed rules for conflicts
 
-User: `/rules-manager:rules status`
+User: `/code-manager:rules status`
 → Show what's installed and validation state

@@ -1,13 +1,13 @@
 {
-  "name": "rules-manager",
+  "name": "code-manager",
   "version": "1.0.0",
   "description": "Manage Claude Code rules for your projects - browse, install, and validate rule collections",
   "author": {
     "name": "James Dixson",
     "email": "dixson3@gmail.com"
   },
-  "repository": "https://github.com/dixson3/rules-manager",
-  "homepage": "https://github.com/dixson3/rules-manager",
+  "repository": "https://github.com/dixson3/code-manager",
+  "homepage": "https://github.com/dixson3/code-manager",
   "license": "MIT",
   "keywords": ["rules", "workflow", "requirements", "task-management"],
   "commands": [

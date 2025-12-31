@@ -1,7 +1,7 @@
 # Claude Code Rules Catalog
-# Index of available rules bundled with the rules-manager plugin
+# Index of available rules bundled with the code-manager plugin
 #
-# Use /rules-manager:rules to interactively manage rules in your project
+# Use /code-manager:rules to interactively manage rules in your project
 
 catalog:
   version: "1.0.0"

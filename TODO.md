@@ -1,12 +1,12 @@
 # TODO - Rules Manager Plugin
 
-Track pending, proposed, and completed work for the rules-manager plugin.
+Track pending, proposed, and completed work for the code-manager plugin.
 
 ## Completed
 
 - [x] Initial plugin structure with .claude-plugin/plugin.json
-- [x] Rename plugin from rules-management to rules-manager
-- [x] Create /rules-manager:rules command with interactive mode
+- [x] Rename plugin from rules-management to code-manager
+- [x] Create /code-manager:rules command with interactive mode
 - [x] Bundle initial rule collection (beads-workflow, edd, prd-workflow)
 - [x] Rename Design-spec.md to EDD.md (Engineering Design Document)
 - [x] Update EDD to use docs/DESIGN.md path
@@ -29,6 +29,7 @@ Track pending, proposed, and completed work for the rules-manager plugin.
 
 ## Proposed / Future
 
+- [ ] Create rule for curating an open-source codebase (OSS best practices, community management)
 - [ ] Add `paths` glob support for conditional rule loading
 - [ ] Add rule templates for common patterns
 - [ ] Add rule search by tags

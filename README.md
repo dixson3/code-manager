@@ -8,20 +8,20 @@ A Claude Code plugin for managing project rules. Browse, install, validate, and 
 
 ```bash
 # Add the marketplace
-claude plugin marketplace add dixson3/rules-manager
+claude plugin marketplace add dixson3/code-manager
 
 # Install the plugin
-claude plugin install rules-manager@dixson3/rules-manager
+claude plugin install code-manager@dixson3/code-manager
 ```
 
 ### Local Development
 
 ```bash
 # Test from any project directory
-claude --plugin-dir /path/to/rules-manager
+claude --plugin-dir /path/to/code-manager
 
 # With debug output
-claude --debug --plugin-dir /path/to/rules-manager
+claude --debug --plugin-dir /path/to/code-manager
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for full development setup.
@@ -30,22 +30,22 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full development setup.
 
 ```bash
 # Interactive mode - guided rule management
-/rules-manager:rules
+/code-manager:rules
 
 # List all available rules
-/rules-manager:rules list
+/code-manager:rules list
 
 # Add a rule to your project
-/rules-manager:rules add beads-workflow
+/code-manager:rules add beads-workflow
 
 # Remove a rule from your project
-/rules-manager:rules remove edd
+/code-manager:rules remove edd
 
 # Validate installed rules for conflicts
-/rules-manager:rules validate
+/code-manager:rules validate
 
 # Show current installation status
-/rules-manager:rules status
+/code-manager:rules status
 ```
 
 ## Available Rules
@@ -71,7 +71,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full development setup.
 
 ## How It Works
 
-When you run `/rules-manager:rules add <rule-id>`, the plugin:
+When you run `/code-manager:rules add <rule-id>`, the plugin:
 
 1. Looks up the rule in the bundled collection
 2. Copies it to your project's `.claude/rules/` directory

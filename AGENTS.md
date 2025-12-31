@@ -6,40 +6,40 @@ A Claude Code plugin for managing project rules. Browse, install, validate, and 
 
 ```bash
 # Install from local directory (for development)
-claude --plugin-dir /path/to/rules-manager
+claude --plugin-dir /path/to/code-manager
 
 # Or add to a marketplace and install
-claude plugin install rules-manager@your-marketplace
+claude plugin install code-manager@your-marketplace
 ```
 
 ## Usage
 
-Once installed, use the `/rules-manager:rules` command:
+Once installed, use the `/code-manager:rules` command:
 
 ```bash
 # Interactive mode - guided rule management
-/rules-manager:rules
+/code-manager:rules
 
 # List all available rules
-/rules-manager:rules list
+/code-manager:rules list
 
 # Add a rule to your project
-/rules-manager:rules add beads-workflow
+/code-manager:rules add beads-workflow
 
 # Remove a rule from your project
-/rules-manager:rules remove edd
+/code-manager:rules remove edd
 
 # Validate installed rules for conflicts
-/rules-manager:rules validate
+/code-manager:rules validate
 
 # Show current installation status
-/rules-manager:rules status
+/code-manager:rules status
 ```
 
 ## Plugin Structure
 
 ```
-rules-manager/
+code-manager/
 ├── .claude-plugin/
 │   └── plugin.json           # Plugin manifest
 ├── commands/

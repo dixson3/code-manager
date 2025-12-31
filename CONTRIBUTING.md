@@ -13,49 +13,49 @@ Thank you for your interest in contributing to the Rules Manager plugin!
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/dixson3/rules-manager.git
-   cd rules-manager
+   git clone https://github.com/dixson3/code-manager.git
+   cd code-manager
    ```
 
 2. Test the plugin locally in any project:
    ```bash
    # From your target project directory
-   claude --plugin-dir /path/to/rules-manager
+   claude --plugin-dir /path/to/code-manager
    ```
 
 3. Verify the plugin loaded:
    ```bash
-   /rules-manager:rules list
+   /code-manager:rules list
    ```
 
 ### Development Workflow
 
 1. Make changes to plugin files
 2. Restart Claude Code to pick up changes
-3. Test your changes with the `/rules-manager:rules` command
+3. Test your changes with the `/code-manager:rules` command
 4. Validate plugin structure before committing
 
 ### Testing in Another Project
 
 ```bash
 # Option 1: Command-line flag (recommended for development)
-claude --plugin-dir /path/to/rules-manager
+claude --plugin-dir /path/to/code-manager
 
 # Option 2: Load multiple plugins
-claude --plugin-dir ./rules-manager --plugin-dir ./other-plugin
+claude --plugin-dir ./code-manager --plugin-dir ./other-plugin
 
 # Option 3: Debug mode (shows plugin loading info)
-claude --debug --plugin-dir /path/to/rules-manager
+claude --debug --plugin-dir /path/to/code-manager
 ```
 
 ### Project Structure
 
 ```
-rules-manager/
+code-manager/
 ├── .claude-plugin/
 │   └── plugin.json           # Plugin manifest (name, version, etc.)
 ├── commands/
-│   └── rules.md              # /rules-manager:rules command
+│   └── rules.md              # /code-manager:rules command
 ├── collection/               # Bundled rule library
 │   ├── task-management/
 │   │   └── Beads.md
@@ -125,13 +125,13 @@ Add an entry to `catalog.yaml`:
 ### 4. Test Your Rule
 
 ```bash
-claude --plugin-dir /path/to/rules-manager
+claude --plugin-dir /path/to/code-manager
 
 # Verify it appears in the list
-/rules-manager:rules list
+/code-manager:rules list
 
 # Test installation
-/rules-manager:rules add my-rule-id
+/code-manager:rules add my-rule-id
 
 # Check it was installed
 ls .claude/rules/
