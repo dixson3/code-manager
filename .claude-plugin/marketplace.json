@@ -1,0 +1,27 @@
+{
+  "name": "code-manager",
+  "owner": {
+    "name": "James Dixson",
+    "email": "dixson3@gmail.com"
+  },
+  "metadata": {
+    "description": "A curated marketplace for Claude Code project rules and workflows"
+  },
+  "plugins": [
+    {
+      "name": "code-manager",
+      "source": "./",
+      "description": "Manage Claude Code rules - browse, install, validate, and remove rules from a curated collection",
+      "version": "1.0.0",
+      "author": {
+        "name": "James Dixson",
+        "email": "dixson3@gmail.com"
+      },
+      "homepage": "https://github.com/dixson3/code-manager",
+      "repository": "https://github.com/dixson3/code-manager",
+      "license": "MIT",
+      "keywords": ["rules", "workflow", "requirements", "task-management"],
+      "category": "productivity"
+    }
+  ]
+}

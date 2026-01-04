@@ -1,6 +1,6 @@
 ---
 id: beads-workflow
-version: 1.0.0
+version: 1.1.0
 name: Beads Task Management
 description: Multi-session task tracking with dependency graphs using the beads issue tracker
 alwaysApply: true
