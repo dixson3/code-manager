@@ -3,6 +3,7 @@ id: beads-workflow
 version: 1.0.0
 name: Beads Task Management
 description: Multi-session task tracking with dependency graphs using the beads issue tracker
+alwaysApply: true
 domain: task-management
 author: dixson3
 tags: [workflow, planning, issue-tracking, dependencies]
@@ -24,35 +25,41 @@ activation:
     - complex-dependencies
 ---
 
-# Beads
+---
 
-This project uses **beads** (`bd` or "beads" skill) to manage TODO items instead of TodoWriter.
-Plan mode should always generate tasks with dependency information and store in **beads** before switching to implementation mode.
+description: Task management must use Beads (bd), not built-in TodoWrite
+alwaysApply: true
+
+---
+
+# Task Management: Use Beads
+
+## CRITICAL REQUIREMENTS
+
+1. **NEVER use TodoWrite or TodoRead tools.** All task tracking uses `bd` (Beads).
+
+2. **Plan Mode Workflow:**
+   - Create a parent epic: `bd create "Epic: <goal>" -t epic -p 1`
+   - Break into child issues with dependencies
+   - Use `bd dep add <child> <parent> --type parent-child` for hierarchy
+   - Use `bd dep add <blocker> <blocked> --type blocks` for sequencing
+   - Only call `ExitPlanMode` AFTER issues exist in beads
+
+3. **Before implementation:**
+   - Run `bd ready` to find unblocked work
+   - Update status: `bd update <id> --status in_progress`
+   - On completion: `bd close <id> --reason "Completed"`
+
+4. **Discovered work:**
+   - Create: `bd create "Found: <issue>" -t bug -p 1`
+   - Link: `bd dep add <new-id> <current-id> --type discovered-from`
 
 ## Context Loading Protocol
 
 1. Run `bd prime` for current work context (or check injected context if hooks are installed)
 2. Review any open beads with `bd ready` to find unblocked work
-3. Requirements are tracked in `DESIGN.md`
 
-## Development Workflow
-
-### Planning Phase
-
-- **Decompose work** into atomic tasks using `bd create`
-- **Establish dependencies** with `--depends-on` flag
-- **Set priorities** (1-5, where 1 is highest) and types (task/bug/feature)
-- Create epics using `bd create -t epic ...` for managing subsystems and collections of related features; use `bd dep add ...` to establish dependency relationships between features, tasks, and epics
-- Create chores using `bd create -t chore ...` for tracking cleanup or reconciliation type tasks
-
-### Implementation Phase
-
-- **Execute one bead at a time** - implement, test, validate
-- **Validate against DESIGN.md** - ensure alignment with functional/nonfunctional requirements
-- **Mark complete** with `bd close <id>` after successful implementation
-- When bugs are discovered, create tracking tasks using `bd create -t bug ...` and create appropriate dependency relationships to other issues
-
-### Session End
+## Session End
 
 **When completing a work session**, you MUST complete ALL steps below.
 
@@ -71,15 +78,21 @@ bd sync
 6. **Verify** - All changes that have been committed are still functional after rebase
 7. **Hand off** - Provide context for next session
 
-## Quick Command Reference
-
-Use `bd quickstart` to learn how to use `bd` commands before calling any
+## Quick Reference
 
 ```bash
-bd ready              # Find unblocked work
-bd create "Title"     # Create new issue (--type, --priority, --depends-on)
-bd close <id>         # Complete work
+bd create "Title" -t <type> -p <priority>   # Create issue
+bd ready                                     # Show unblocked work
 bd sync               # Sync with git
 bd prime              # Get workflow context
+bd update <id> --status in_progress          # Start work
+bd close <id> --reason "Done"                # Complete
+bd dep add <from> <to> --type blocks         # Add blocker
+bd dep tree <id>                             # View dependencies
 bd quickstart         # Full command summary
 ```
+
+Types: epic, feature, task, bug, chore
+Priorities: 0 (critical) → 4 (low)
+
+Use `bd quickstart` to learn how to use `bd` commands before calling any

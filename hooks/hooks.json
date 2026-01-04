@@ -1,0 +1,23 @@
+{
+  "PreToolUse": [
+    {
+      "matcher": "TodoWrite|TodoRead",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo 'BLOCKED: Use bd (beads) instead of TodoWrite.' >&2; exit 2"
+        }
+      ]
+    },
+    {
+      "matcher": "ExitPlanMode",
+      "description": "Validate beads issues exist before exiting plan mode",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-beads-issues.sh"
+        }
+      ]
+    }
+  ]
+}
