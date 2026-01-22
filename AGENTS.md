@@ -155,19 +155,29 @@ When maintaining this plugin:
 
 - whenever a rule is modified increment the version of the rule using semver principals
 
-## Agent Workflow (Long-Lived Branch)
+## Agent Workflow (Long-Lived Feature Branch)
 
-This project uses the `dixson-test` branch for development. Changes are regularly rebased against `main` to stay current.
+**IMPORTANT**: When working on ANY branch other than `main`, you MUST follow this rebase workflow. This keeps the feature branch current with main while maintaining a clean, linear history.
+
+### Detecting Branch Context
+
+Check your current branch at session start:
+```bash
+git branch --show-current
+```
+
+- If on `main`: Follow standard main branch workflow
+- If on ANY other branch: Follow the long-lived feature branch workflow below
 
 ### Daily Development Workflow
 
-1. **Work on the feature branch**: All development happens on `dixson-test`
+1. **Work on the feature branch**: All development happens on the current feature branch (NOT main)
 2. **Commit changes normally**: Use standard git commit workflow
-3. **Push to remote**: `git push origin dixson-test`
+3. **Push to remote**: `git push origin <current-branch>`
 
 ### Staying Current with Main
 
-When `main` has new commits, rebase `dixson-test` to incorporate them:
+When `main` has new commits, rebase your feature branch to incorporate them:
 
 ```bash
 # 1. Ensure working tree is clean
@@ -176,7 +186,7 @@ git status  # Must show "nothing to commit, working tree clean"
 # 2. Fetch latest changes
 git fetch origin
 
-# 3. Rebase onto main
+# 3. Rebase current branch onto main
 git rebase origin/main
 
 # 4. If conflicts occur:
@@ -185,11 +195,11 @@ git rebase origin/main
 #    - git rebase --continue
 #    - Repeat until rebase completes
 
-# 5. Force push with safety check
-git push --force-with-lease origin dixson-test
+# 5. Force push with safety check (use current branch name)
+git push --force-with-lease
 
 # 6. Verify success
-git status  # Should show "up to date with origin/dixson-test"
+git status  # Should show "up to date with origin/<current-branch>"
 ```
 
 ### Session Completion (Landing the Plane)
@@ -203,18 +213,19 @@ git status  # Should show "up to date with origin/dixson-test"
 3. **Push to remote**:
    ```bash
    git status  # Verify branch state
-   git push origin dixson-test
-   git status  # MUST show "up to date with origin/dixson-test"
+   git push  # Pushes to tracking branch (origin/<current-branch>)
+   git status  # MUST show "up to date with origin/<current-branch>"
    ```
 4. **Document handoff**: Note any in-progress work or next steps
 
 ### CRITICAL RULES
 
+- **DETECT BRANCH**: Always check current branch - if NOT on `main`, use rebase workflow
 - **NEVER rebase with uncommitted changes** - commit or stash first
 - **ALWAYS use `--force-with-lease`** instead of `--force` when pushing after rebase
 - **Work is NOT complete** until `git push` succeeds and shows "up to date"
 - **If rebase fails**: Use `git rebase --abort` to return to safe state
-- **Target branch**: `dixson-test` (NOT `main`)
+- **NEVER push directly to `main`** - feature branches only
 
 ### Emergency Recovery
 
