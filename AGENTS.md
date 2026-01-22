@@ -154,3 +154,77 @@ When maintaining this plugin:
 ## Rule Versioning
 
 - whenever a rule is modified increment the version of the rule using semver principals
+
+## Agent Workflow (Long-Lived Branch)
+
+This project uses the `dixson-test` branch for development. Changes are regularly rebased against `main` to stay current.
+
+### Daily Development Workflow
+
+1. **Work on the feature branch**: All development happens on `dixson-test`
+2. **Commit changes normally**: Use standard git commit workflow
+3. **Push to remote**: `git push origin dixson-test`
+
+### Staying Current with Main
+
+When `main` has new commits, rebase `dixson-test` to incorporate them:
+
+```bash
+# 1. Ensure working tree is clean
+git status  # Must show "nothing to commit, working tree clean"
+
+# 2. Fetch latest changes
+git fetch origin
+
+# 3. Rebase onto main
+git rebase origin/main
+
+# 4. If conflicts occur:
+#    - Edit conflicting files
+#    - git add <resolved-files>
+#    - git rebase --continue
+#    - Repeat until rebase completes
+
+# 5. Force push with safety check
+git push --force-with-lease origin dixson-test
+
+# 6. Verify success
+git status  # Should show "up to date with origin/dixson-test"
+```
+
+### Session Completion (Landing the Plane)
+
+**When ending a work session**, complete ALL steps below:
+
+1. **Commit all changes**: Ensure no uncommitted work remains
+2. **Run quality gates** (if code changed):
+   - Validate rules: `/code-manager:rules validate` (if modified)
+   - Test plugin installation
+3. **Push to remote**:
+   ```bash
+   git status  # Verify branch state
+   git push origin dixson-test
+   git status  # MUST show "up to date with origin/dixson-test"
+   ```
+4. **Document handoff**: Note any in-progress work or next steps
+
+### CRITICAL RULES
+
+- **NEVER rebase with uncommitted changes** - commit or stash first
+- **ALWAYS use `--force-with-lease`** instead of `--force` when pushing after rebase
+- **Work is NOT complete** until `git push` succeeds and shows "up to date"
+- **If rebase fails**: Use `git rebase --abort` to return to safe state
+- **Target branch**: `dixson-test` (NOT `main`)
+
+### Emergency Recovery
+
+If a rebase goes wrong:
+
+```bash
+# Abort in-progress rebase
+git rebase --abort
+
+# Or undo completed rebase
+git reflog  # Find commit hash before rebase
+git reset --hard <commit-hash>
+```
