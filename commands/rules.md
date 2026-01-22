@@ -39,14 +39,35 @@ Format as a clear table or list.
 3. Delete the rule file
 4. Report success
 
-### `validate` - Check Rule Compatibility
+### `validate` - Check Rule Frontmatter and Compatibility
 
-1. Read all rules in `.claude/rules/`
+This command performs two types of validation:
+
+#### A. Frontmatter Schema Validation
+
+1. Read the schema from `${CLAUDE_PLUGIN_ROOT}/schema/rule-schema.yaml`
+2. For each rule in the collection (`${CLAUDE_PLUGIN_ROOT}/collection/**/*.md`), parse the YAML frontmatter
+3. Check each rule against schema requirements:
+   - **Required fields present**: id, version, domain, name, description
+   - **ID format**: Must match `^[a-z][a-z0-9-]*$` (kebab-case, e.g., "beads-workflow")
+   - **Version format**: Must match `^\d+\.\d+\.\d+$` (semver, e.g., "1.0.0")
+   - **Domain exists**: Must be one of the domains defined in the schema taxonomy
+   - **Description length**: Must be <= 160 characters
+4. Report validation results:
+   - ✓ Pass: Rule is valid
+   - ✗ Error: Missing required field, invalid format, or domain not in taxonomy
+   - ⚠ Warning: Description too long
+
+#### B. Rule Compatibility Validation (Installed Rules)
+
+1. Read all rules in `.claude/rules/` (installed rules)
 2. Parse their frontmatter for relationship declarations
 3. Check for conflicts:
    - Rule A replaces Rule B, but both installed → ERROR
    - Rule A complements Rule B, but B missing → WARNING
 4. Report validation results
+
+Output both validation reports in a clear, structured format.
 
 ### `status` - Show Current State
 
@@ -80,14 +101,28 @@ collection/
 
 ## Frontmatter Schema
 
+The schema is defined in `${CLAUDE_PLUGIN_ROOT}/schema/rule-schema.yaml`.
+
 Each rule has YAML frontmatter with these fields:
-- `id`: Unique identifier (e.g., "beads-workflow")
+
+**Required:**
+- `id`: Unique identifier (kebab-case, e.g., "beads-workflow")
+- `version`: Semantic version (e.g., "1.0.0")
 - `name`: Human-readable name
-- `description`: Brief description
-- `domain`: Category (task-management, requirements, etc.)
-- `relationship.complements`: Rules that work alongside
+- `description`: Brief description (<= 160 chars)
+- `domain`: Category from taxonomy (task-management, requirements, code-quality, version-control, testing, documentation, security, deployment)
+
+**Optional:**
+- `author`: Author identifier
+- `tags`: Array of searchable tags
+- `paths`: Glob patterns for conditional loading
+- `relationship.complements`: Rules that work alongside this one
 - `relationship.replaces`: Rules this is an alternative to
-- `requires.tools`: External tools needed
+- `relationship.extends`: Rule this builds upon
+- `requires.tools`: External CLI tools needed
+- `requires.rules`: Other rules that must be present
+- `activation.triggers`: Conditions that suggest using this rule
+- `activation.contexts`: Work contexts where this rule applies
 
 ## Example Interactions
 

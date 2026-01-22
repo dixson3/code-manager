@@ -15,6 +15,7 @@ Track pending, proposed, and completed work for the code-manager plugin.
 - [x] Create schema/rule-schema.yaml for validation
 - [x] Document recommended workflow sets in catalog
 - [x] Create CONTRIBUTING.md with development setup instructions
+- [x] Add validation command to check rule frontmatter against schema
 
 ## In Progress
 
@@ -22,7 +23,6 @@ Track pending, proposed, and completed work for the code-manager plugin.
 
 ## Pending
 
-- [ ] Add validation command to check rule frontmatter against schema
 - [ ] Add more rules to the collection (code-quality, testing, etc.)
 - [ ] Add rule versioning and upgrade detection
 - [ ] Test plugin installation from GitHub marketplace
